@@ -13,6 +13,89 @@
 # limitations under the License.
 #
 
+####################
+#      O3 FLAG     #
+####################
+
+LOCAL_DISABLE_O3 := \
+	libstagefright \
+	libstagefright_soft_aacdec \
+	libstagefright_id3 \
+	libbluetooth_jni \
+	libbt-brcm_bta \
+	libbt-brcm_stack \
+	libbt-hci \
+	libaudioflinger \
+	libbinder \
+	libexynosv4l2 \
+	bluetooth.default \
+	$(WEBCHROMIUM_STATIC_LIBRARIES) \
+	libwebviewchromium \
+	libwebviewchromium_loader \
+	libwebviewchromium_plat_support
+
+LOCAL_O3_EXTRAS_FLAGS := -fno-inline-functions
+
+ifneq ($(filter $(TARGET_GCC_VERSION), 5.1 5.1.%),)
+	LOCAL_O3_EXTRAS_FLAGS += -Wno-array-bounds
+endif
+
+ifeq ($(DISABLE_OPTIMIZATIONS_ON_CHROMIUM),true)
+    LOCAL_DISABLE_O3 += $(WEBCHROMIUM_STATIC_LIBRARIES)
+endif
+
+ifeq ($(TARGET_DEVICE),shamu)
+    LOCAL_O3_EXTRAS_FLAGS += -fno-tree-vectorize
+endif
+####################
+#  END  03  FLAGS  #
+####################
+
+
+##########################
+#  FLOOP_NEST_OPTIMIZE   #
+########################## 
+LOCAL_ENABLE_NEST := \
+    art \
+    libsigchain \
+    libart \
+    libart-compiler \
+    libartd \
+    libartd-compiler \
+    libart-disassembler \
+    libartd-disassembler \
+    core.art-host \
+    core.art \
+    cpplint-art-phony \
+    libnativebridgetest \
+    libarttest \
+    art-run-tests \
+    libart-gtest \
+    libc \
+    libc_bionic \
+    libc_gdtoa \
+    libc_netbsd \
+    libc_freebsd \
+    libc_dns \
+    libc_openbsd \
+    libc_cxa \
+    libc_syscalls \
+    libc_aeabi \
+    libc_common \
+    libc_nomalloc \
+    libc_malloc \
+    libc_stack_protector \
+    libc_tzcode \
+    libstdc++ \
+    linker \
+    libdl \
+    libm \
+    tzdata \
+    bionic-benchmarks
+#############################
+#  END FLOOP_NEST_OPTIMIZE  #
+#############################
+
 ################
 #Strict Aliasing
 ################

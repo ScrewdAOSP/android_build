@@ -45,6 +45,62 @@ endif
 # limitations under the License.
 #
 
+####################
+# O3 FLAGS   #
+####################
+ifeq ($(USE_O3_OPTIMIZATIONS),true)
+ifeq ($(filter $(LOCAL_DISABLE_O3), $(LOCAL_MODULE)),)
+
+ifdef LOCAL_CONLYFLAGS
+LOCAL_CONLYFLAGS += \
+	-O3
+else
+LOCAL_CONLYFLAGS := \
+	-O3
+endif
+
+ifdef LOCAL_CPPFLAGS
+LOCAL_CPPFLAGS += \
+	-O3
+else
+LOCAL_CPPFLAGS := \
+	-O3
+endif
+
+endif
+endif
+####################
+#  END  03  FLAGS  #
+####################
+
+##########################
+#  FLOOP_NEST_OPTIMIZE   #
+########################## 
+ifeq ($(FLOOP_NEST_OPTIMIZE),true)
+ifneq ($(filter $(LOCAL_ENABLE_NEST), $(LOCAL_MODULE)),)
+
+ifdef LOCAL_CONLYFLAGS
+LOCAL_CONLYFLAGS += \
+	-floop-nest-optimize
+else
+LOCAL_CONLYFLAGS := \
+	-floop-nest-optimize
+endif
+
+ifdef LOCAL_CPPFLAGS
+LOCAL_CPPFLAGS += \
+	-floop-nest-optimize
+else
+LOCAL_CPPFLAGS := \
+	-floop-nest-optimize
+endif
+
+endif
+endif
+#############################
+#  END FLOOP_NEST_OPTIMIZE  #
+#############################
+
 #################
 # STRICT_ALIASING
 #################
